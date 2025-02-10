@@ -1,52 +1,39 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
+// Criando o Contexto de Autenticação
 export const AuthContext = createContext();
 
-export const AuthContextProvider = ({children})=> {
-    const [user, setUser] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(undefined);
-    
-    useEffect(()=>{
-        //onAuthStateChanged
-    }, [])
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(undefined);
 
-    const login = async(email, password) =>{
+  useEffect(() => {
+    setTimeout(() => {
+      setIsAuthenticated(true);
+    }, 3000);
+  }, []);
 
-        try {
-            
-        } catch (e) {
-            
-        }
-    }
-    const logout = async() =>{
+  const login = (email, password) => {
+  };
 
-        try {
-            
-        } catch (e) {
-            
-        }
-    }
-    const register = async(email, password, userName, profireUrl) =>{
+  const logout = () => {
+  };
 
-        try {
-            
-        } catch (e) {
-            
-        }
-    }
+  const register = (email, password, username) => {
 
-    return(
-        <AuthContextProvider value={{user,isAuthenticated,login,register,logout}}>
-            {children}
-        </AuthContextProvider>
-    )
-}
+  };
 
-export const useAuth = ()=>{
-    const value = useContext(AuthContext);
+  return (
+    <AuthContext.Provider value={{ user, isAuthenticated, login, register, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-    if(!value){
-        throw new Error('useAuth must be wrapped inside AuthContextProvider')
-    }
-    return value;
-}
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};

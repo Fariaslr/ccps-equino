@@ -14,10 +14,10 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
-    "@react-navigation/native": "^6.0.2",
+    "@react-navigation/native": "^6.1.18",
     "ccps": "file:",
     "ccps-app": "file:",
-    "expo": "^52.0.30",
+    "expo": "^52.0.31",
     "expo-font": "~13.0.3",
     "expo-linking": "~7.0.5",
     "expo-router": "~4.0.17",
