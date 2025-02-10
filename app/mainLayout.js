@@ -3,7 +3,7 @@ import { Slot, useRouter, useSegments } from "expo-router";
 import { useAuth, AuthContextProvider } from "../context/authContext";  // Corrigido
 
 const MainLayout = () => {
-  const { isAuthenticated } = useAuth();  // Pegando o estado de autenticação
+  const { isAuthenticated } = useAuth() || { isAuthenticated: false }; // Pegando o estado de autenticação
   const segments = useSegments();
   const router = useRouter();
 
@@ -14,16 +14,15 @@ const MainLayout = () => {
   
     const inApp = segments[0] === "(app)";
   
-    // Forçar redirecionamento para testar
     if (isAuthenticated && !inApp) {
       console.log("Redirecionando para home");
-      router.replace("home");
+      router.replace("/home");  // Caminho atualizado
     } else if (!isAuthenticated && inApp) {
       console.log("Redirecionando para signIn");
-      router.replace("signIn");
+      router.replace("/signIn");  // Caminho correto
     }
   }, [isAuthenticated, segments, router]);
-     // Dependências ajustadas
+  
 
   return <Slot />;  // Renderiza a tela correspondente
 };

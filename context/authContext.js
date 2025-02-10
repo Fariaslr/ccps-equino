@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      setIsAuthenticated(true);
+      setIsAuthenticated(false);
     }, 3000);
   }, []);
 
