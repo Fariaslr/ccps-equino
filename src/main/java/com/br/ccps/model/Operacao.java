@@ -1,0 +1,42 @@
+package com.br.ccps.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.Date;
+
+@Entity
+@Table(name = "operacao")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Operacao {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "id_ccps", nullable = false)
+    private CCPS ccps;
+
+    private boolean arquivosProcessosTecnologicos;
+    private Date dataAprovacaoArquivos;
+
+    private boolean fluxoOperacionalDefinido;
+    private Date dataAprovacaoFluxo;
+
+    private boolean medidasHigienicoSanitariasFuncionarios;
+    private Date dataAprovacaoHigieneFunc;
+
+    private boolean medidasHigienicoSanitariasVisitantes;
+    private Date dataAprovacaoHigieneVisit;
+
+    private boolean controlePragas;
+    private Date dataAprovacaoControlePragas;
+
+    private boolean sistemaEscoamento;
+    private Date dataAprovacaoEscoamento;
+}
+
