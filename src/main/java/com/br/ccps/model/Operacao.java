@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "operacao")
@@ -14,12 +15,12 @@ import java.util.Date;
 public class Operacao {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "id_ccps", nullable = false)
-    private CCPS ccps;
+    private Ccps ccps;
 
     private boolean arquivosProcessosTecnologicos;
     private Date dataAprovacaoArquivos;

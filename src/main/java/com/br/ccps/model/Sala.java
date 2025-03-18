@@ -1,5 +1,7 @@
 package com.br.ccps.model;
 
+import java.util.UUID;
+
 import com.br.ccps.enums.StatusValidacao;
 
 import jakarta.persistence.*;
@@ -14,12 +16,12 @@ import lombok.*;
 public class Sala {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "id_ccps", nullable = false)
-    private CCPS ccps;
+    private Ccps ccps;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo", nullable = false)

@@ -1,5 +1,7 @@
 package com.br.ccps.model;
 
+import java.util.UUID;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,8 +14,8 @@ import lombok.*;
 public class Tipo {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "nome_tipo", unique = true, nullable = false)
     private String nomeTipo;

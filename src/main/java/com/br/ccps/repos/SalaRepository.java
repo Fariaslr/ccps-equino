@@ -1,8 +1,10 @@
 package com.br.ccps.repos;
 
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.br.ccps.model.Sala;
 
-public interface SalaRepository extends JpaRepository<Sala, Long> {
+public interface SalaRepository extends JpaRepository<Sala, UUID> {
 }
