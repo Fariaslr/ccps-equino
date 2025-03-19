@@ -2,7 +2,6 @@ import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 
-
 export default function RegisterScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -47,5 +46,10 @@ export default function RegisterScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", padding: 20 },
   title: { fontSize: 24, fontWeight: "bold", marginBottom: 20 },
-  input: { height: 40, borderBottomWidth: 1, marginBottom: 20, paddingHorizontal: 10 },
+  input: {
+    height: 40,
+    borderBottomWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+  },
 });
