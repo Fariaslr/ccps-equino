@@ -24,6 +24,8 @@ public class Ccps {
 
 	private String endereco;
 
+	private String cep;
+	
 	private String cidade;
 
 	private String estado;
