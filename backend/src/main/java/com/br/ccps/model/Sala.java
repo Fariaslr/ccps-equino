@@ -1,5 +1,6 @@
 package com.br.ccps.model;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import com.br.ccps.enums.StatusValidacao;
@@ -43,6 +44,8 @@ public class Sala {
     @Enumerated(EnumType.STRING)
     @Column(name = "status_validacao", nullable = false)
     private StatusValidacao statusValidacao;
+    
+    private LocalDate DataUltimaValidacao;s
 
     @Column(name = "codigo_aprovado", unique = true)
     private String codigoAprovado;

@@ -1,9 +1,10 @@
 package com.br.ccps.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -18,20 +19,25 @@ public class Ccps {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 
-	private String nomeCCPS;
+	@Column(name = "nome_ccps")
+	private String nomeCcps;
 
+	@Column(length = 18)
 	private String cnpj;
-
-	private String endereco;
-
+	
+	@Column(length = 8)
 	private String cep;
 	
+	private String endereco;
+		
 	private String cidade;
 
 	private String estado;
 
+	@Column(name = "nome_veterinario")
 	private String nomeVeterinario;
 
+	@NotNull
 	private String crmv;
 
 	private String email;
@@ -42,5 +48,5 @@ public class Ccps {
 	private String codigoAprovado;
 
 	@Column(name = "data_validade")
-	private Date dataValidade;
+	private LocalDate dataValidade;
 }
