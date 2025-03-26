@@ -1,6 +1,12 @@
-import { View, Text, TextInput,  StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { useState } from "react";
-import { useRouter }from 'expo-router';
+import { useRouter } from "expo-router";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -29,12 +35,15 @@ export default function LoginScreen() {
         value={password}
         onChangeText={setPassword}
       />
-      
+
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, styles.secondaryButton]} onPress={() => router.push("/screens/RegisterScreen")}>
+      <TouchableOpacity
+        style={[styles.button, styles.secondaryButton]}
+        onPress={() => router.push("/screens/RegisterScreen")}
+      >
         <Text style={styles.buttonText}>Criar Conta</Text>
       </TouchableOpacity>
     </View>
@@ -54,8 +63,11 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderWidth: 0,
-    width: "30%", 
-    shadowRadius: 2,
+    width: "30%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
     borderRadius: 5,
     marginBottom: 20,
     paddingHorizontal: 10,
@@ -72,7 +84,7 @@ const styles = StyleSheet.create({
     width: "30%",
   },
   buttonText: {
-    color: "#fff", 
+    color: "#fff",
     fontWeight: "bold",
     fontSize: 16,
   },
