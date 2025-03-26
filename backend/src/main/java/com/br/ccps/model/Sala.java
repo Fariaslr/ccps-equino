@@ -45,7 +45,7 @@ public class Sala {
     @Column(name = "status_validacao", nullable = false)
     private StatusValidacao statusValidacao;
     
-    private LocalDate DataUltimaValidacao;s
+    private LocalDate DataUltimaValidacao;
 
     @Column(name = "codigo_aprovado", unique = true)
     private String codigoAprovado;
