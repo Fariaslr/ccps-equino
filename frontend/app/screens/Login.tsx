@@ -4,6 +4,8 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Image,
+  ScrollView,
 } from "react-native";
 import { useState } from "react";
 import { useRouter } from "expo-router";
@@ -13,79 +15,118 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
 
   const router = useRouter();
+
   const handleLogin = () => {
     console.log("Email:", email);
     console.log("Senha:", password);
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
+    <View style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Image
+          style={styles.logo}
+          source={{
+            uri: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+          }}
+        />
+        <Text style={styles.title}>Bem-vindo!</Text>
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Entrar</Text>
-      </TouchableOpacity>
+        <View style={styles.formContainer}>
+          <Text style={styles.label}>E-mail</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="seu@email.com"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+          />
 
-      <TouchableOpacity
-        style={[styles.button, styles.secondaryButton]}
-        onPress={() => router.push("/screens/RegisterScreen")}
-      >
-        <Text style={styles.buttonText}>Criar Conta</Text>
-      </TouchableOpacity>
+          <Text style={styles.label}>Senha</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Senha"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Entrar</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.button, styles.secondaryButton]}
+            onPress={() => router.push("/screens/RegisterCcps")}
+          >
+            <Text style={styles.buttonText}>Criar Conta</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
+    backgroundColor: "#f8f9fa",
+  },
+  container: {
+    flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f4f4f4",
-    gap: 15,
-    shadowRadius: 2,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
   },
-  title: { fontSize: 24, fontWeight: "bold", marginBottom: 20 },
-  input: {
-    height: 40,
-    borderWidth: 0,
-    width: "30%",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    borderRadius: 5,
+  title: {
+    fontSize: 26,
+    fontWeight: "bold",
     marginBottom: 20,
+    color: "#333",
+    textAlign: "center",
+  },
+  formContainer: {
+    width: "100%",
+    maxWidth: 350,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+    color: "#555",
+  },
+  input: {
+    height: 44,
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
     paddingHorizontal: 10,
+    marginBottom: 15,
+    fontSize: 16,
+    color: "#333",
+    width: "100%",
+  },
+  button: {
+    backgroundColor: "#007bff",
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 10,
+    width: "100%",
   },
   secondaryButton: {
     backgroundColor: "#6c757d", // Cinza para um botão secundário
-  },
-  button: {
-    backgroundColor: "#007bff", // Cor do botão
-    padding: 5,
-    borderRadius: 8,
-    alignItems: "center",
-    marginVertical: 5,
-    width: "30%",
   },
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
     fontSize: 16,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    marginBottom: 20,
   },
 });
