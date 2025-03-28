@@ -1,4 +1,11 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 
@@ -7,12 +14,6 @@ export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-
-  const handleRegister = () => {
-    console.log("Nome:", name);
-    console.log("Email:", email);
-    console.log("Senha:", password);
-  };
 
   return (
     <View style={styles.container}>
@@ -37,19 +38,40 @@ export default function RegisterScreen() {
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Cadastrar" onPress={handleRegister} />
-      <Button title="Voltar para Login" onPress={() => router.back()} />
+      <TouchableOpacity style={styles.button} onPress={() => router.navigate("/screens/Login")}>
+        <Text style={styles.buttonText}>Cadastrar</Text>
+      </TouchableOpacity>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 20 },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
   title: { fontSize: 24, fontWeight: "bold", marginBottom: 20 },
   input: {
     height: 40,
-    borderBottomWidth: 1,
+    borderWidth: 0,
+    width: "30%",
+    shadowRadius: 2,
+    borderRadius: 5,
     marginBottom: 20,
     paddingHorizontal: 10,
+  },
+  button: {
+    backgroundColor: "#007bff", // Cor do botão
+    padding: 5,
+    borderRadius: 8,
+    alignItems: "center",
+    marginVertical: 5,
+    width: "30%",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
