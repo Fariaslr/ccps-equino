@@ -55,7 +55,7 @@ export default function RegisterCcps() {
 
   const handleNext = () => {
     if (validateFields()) {
-      router.navigate("/screens/RegisterVet");
+      router.push("/screens/RegisterVeterinario");
     }
   };
 
