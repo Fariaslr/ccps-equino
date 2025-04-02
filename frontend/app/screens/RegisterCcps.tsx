@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -14,57 +15,56 @@ import { MaskedTextInput } from "react-native-mask-text";
 
 export default function RegisterCcps() {
   const router = useRouter();
+  const [cnpj, setCnpj] = useState("");
+  const [cep, setCep] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [nome, setNome] = useState("");
+  const [endereco, setEndereco] = useState("");
+  const [error, setError] = useState<{ nome?: string; cnpj?: string; cep?: string; telefone?: string }>({});
 
-  const [formData, setFormData] = useState({
-    nome: "",
-    cnpj: "",
-    cep: "",
-    telefone: "",
-  });
+  const buscarCep = async (cep: string) => {
+    if (cep.length !== 9) return; // Verifica se o CEP está completo antes de buscar
 
-  const [error, setError] = useState<Record<string, string>>({});
+    try {
+      const response = await fetch(`http://cep.republicavirtual.com.br/web_cep.php?cep=${cep}&formato=json`);
+      const data = await response.json();
 
-  // Função para atualizar os valores do formulário
-  const handleChange = (field: keyof typeof formData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-
-    // Remove o erro caso o campo seja preenchido
-    setError((prev) => {
-      const newErrors = { ...prev };
-      if (value.trim() !== "") {
-        delete newErrors[field];
+      if (data.resultado === "1") {
+        setEndereco(`${data.tipo_logradouro} ${data.logradouro}, ${data.bairro}, ${data.cidade} - ${data.uf}`);
+        setError(prev => ({ ...prev, cep: undefined })); // Remove o erro do CEP
+      } else {
+        setError(prev => ({ ...prev, cep: "CEP inválido!" }));
+        setEndereco("");
       }
-      return newErrors;
-    });
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível buscar o CEP.");
+    }
   };
 
   const validateFields = () => {
-    let errors: Record<string, string> = {};
-  
-    if (!formData.nome.trim()) errors.nome = "Nome do CCPS é obrigatório!";
-    
-    if (formData.cnpj.length !== 18) {
-      errors.cnpj = "CNPJ inválido!";
-    }
-  
-    if (formData.cep.length !== 9) {
-      errors.cep = "CEP inválido!";
-    }
-  
-    if (formData.telefone.length !== 15) {
-      errors.telefone = "Número de telefone inválido!";
-    }
-  
+    let errors: { nome?: string; cnpj?: string; cep?: string; telefone?: string } = {};
+
+    if (!nome.trim()) errors.nome = "Nome do CCPS é obrigatório!";
+    if (cnpj.length !== 18) errors.cnpj = "CNPJ inválido!";
+    if (cep.length !== 9) errors.cep = "CEP inválido!";
+    if (telefone.length !== 15) errors.telefone = "Número de telefone inválido!";
+
     setError(errors);
     return Object.keys(errors).length === 0;
   };
-  
 
   const handleNext = () => {
     if (validateFields()) {
       router.navigate("/screens/RegisterVet");
     }
   };
+
+  const isFormValid =
+    nome.trim() !== "" &&
+    cnpj.length === 18 &&
+    cep.length === 9 &&
+    telefone.length === 15 &&
+    !error.cep; // Garante que o erro do CEP foi resolvido
 
   return (
     <SafeAreaProvider style={styles.safeArea}>
@@ -78,60 +78,59 @@ export default function RegisterCcps() {
         <Text style={styles.title}>Cadastrar CCPS</Text>
 
         <View style={styles.formContainer}>
-          {/* Nome do CCPS */}
           <Text style={styles.label}>Nome do CCPS</Text>
           <TextInput
             style={styles.input}
             placeholder="Ex: Rancho Estrela"
-            value={formData.nome}
-            onChangeText={(text) => handleChange("nome", text)}
+            value={nome}
+            onChangeText={setNome}
           />
           {error.nome && <Text style={styles.error}>{error.nome}</Text>}
 
-          {/* CNPJ */}
           <Text style={styles.label}>CNPJ</Text>
           <MaskedTextInput
             mask="99.999.999/9999-99"
             style={styles.input}
             placeholder="12.345.678/1234-01"
             keyboardType="numeric"
-            value={formData.cnpj}
-            onChangeText={(text) => handleChange("cnpj", text)}
+            value={cnpj}
+            onChangeText={setCnpj}
           />
           {error.cnpj && <Text style={styles.error}>{error.cnpj}</Text>}
 
-          {/* CEP */}
           <Text style={styles.label}>CEP</Text>
           <MaskedTextInput
             mask="99999-999"
             style={styles.input}
             placeholder="40010-000"
             keyboardType="numeric"
-            value={formData.cep}
-            onChangeText={(text) => handleChange("cep", text)}
+            value={cep}
+            onChangeText={(text) => {
+              setCep(text);
+              setError(prev => ({ ...prev, cep: undefined })); // Remove erro ao digitar
+              if (text.length === 9) buscarCep(text); // Chama a API ao preencher o CEP
+            }}
           />
           {error.cep && <Text style={styles.error}>{error.cep}</Text>}
 
-          {/* Telefone */}
+          {/* Exibe o endereço se o CEP for válido */}
+          {endereco ? <Text style={styles.address}>{endereco}</Text> : null}
+
           <Text style={styles.label}>Telefone</Text>
           <MaskedTextInput
             mask="(99) 99999-9999"
             style={styles.input}
             placeholder="(11) 91234-5678"
             keyboardType="phone-pad"
-            value={formData.telefone}
-            onChangeText={(text) => handleChange("telefone", text)}
+            value={telefone}
+            onChangeText={setTelefone}
           />
           {error.telefone && <Text style={styles.error}>{error.telefone}</Text>}
 
-          {/* Botão de Avançar */}
           <TouchableOpacity
-            style={[
-              styles.button,
-              Object.keys(error).length > 0 && styles.buttonDisabled,
-            ]}
+            style={[styles.button, !isFormValid && styles.buttonDisabled]}
             onPress={handleNext}
-            disabled={Object.keys(error).length > 0}
+            disabled={!isFormValid}
           >
             <Text style={styles.buttonText}>Avançar</Text>
           </TouchableOpacity>
@@ -207,5 +206,13 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: {
     backgroundColor: "#ccc",
+  },
+  address: {
+    fontSize: 14,
+    color: "#333",
+    backgroundColor: "#e9ecef",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
   },
 });

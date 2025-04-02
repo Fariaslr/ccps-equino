@@ -36,7 +36,7 @@ export default function LoginScreen() {
           <Text style={styles.label}>E-mail</Text>
           <TextInput
             style={styles.input}
-            placeholder="seu@email.com"
+            placeholder="E-mail"
             keyboardType="email-address"
             value={email}
             onChangeText={setEmail}
