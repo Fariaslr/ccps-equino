@@ -23,7 +23,7 @@ export default function RegisterCcps() {
   const [error, setError] = useState<{ nome?: string; cnpj?: string; cep?: string; telefone?: string }>({});
 
   const buscarCep = async (cep: string) => {
-    if (cep.length !== 9) return; // Verifica se o CEP está completo antes de buscar
+    if (cep.length !== 9) return; 
 
     try {
       const response = await fetch(`http://cep.republicavirtual.com.br/web_cep.php?cep=${cep}&formato=json`);
@@ -107,13 +107,12 @@ export default function RegisterCcps() {
             value={cep}
             onChangeText={(text) => {
               setCep(text);
-              setError(prev => ({ ...prev, cep: undefined })); // Remove erro ao digitar
-              if (text.length === 9) buscarCep(text); // Chama a API ao preencher o CEP
+              setError(prev => ({ ...prev, cep: undefined }));
+              if (text.length === 9) buscarCep(text);
             }}
           />
           {error.cep && <Text style={styles.error}>{error.cep}</Text>}
-
-          {/* Exibe o endereço se o CEP for válido */}
+          
           {endereco ? <Text style={styles.address}>{endereco}</Text> : null}
 
           <Text style={styles.label}>Telefone</Text>
@@ -128,9 +127,8 @@ export default function RegisterCcps() {
           {error.telefone && <Text style={styles.error}>{error.telefone}</Text>}
 
           <TouchableOpacity
-            style={[styles.button, !isFormValid && styles.buttonDisabled]}
+            style={[styles.button]}
             onPress={handleNext}
-            disabled={!isFormValid}
           >
             <Text style={styles.buttonText}>Avançar</Text>
           </TouchableOpacity>
@@ -147,7 +145,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexGrow: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 30,

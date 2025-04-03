@@ -16,11 +16,6 @@ export default function LoginScreen() {
 
   const router = useRouter();
 
-  const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Senha:", password);
-  };
-
   return (
     <View style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -51,7 +46,7 @@ export default function LoginScreen() {
             onChangeText={setPassword}
           />
 
-          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <TouchableOpacity style={styles.button} onPress={ ()=> router.push("/screens/home/HomeVet") }>
             <Text style={styles.buttonText}>Entrar</Text>
           </TouchableOpacity>
 

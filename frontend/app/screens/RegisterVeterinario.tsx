@@ -1,19 +1,37 @@
-import {
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Image,
-  ScrollView,
-} from "react-native";
 import { useState } from "react";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Alert } from "react-native";
 import { useRouter } from "expo-router";
+import { MaskedTextInput } from "react-native-mask-text";
 
-export default function RegisterVet() {
+export default function RegisterVeterinario() {
+  const router = useRouter();
+  
+  const [nome, setNome] = useState("");
+  const [crmv, setCrmv] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const router = useRouter();
+  const [error, setError] = useState<{ nome?: string; crmv?: string; email?: string; password?: string; confirmPassword?: string }>({});
+
+  const validateFields = () => {
+    let errors: { nome?: string; crmv?: string; email?: string; password?: string; confirmPassword?: string } = {};
+
+    if (!nome.trim()) errors.nome = "Nome do veterinário é obrigatório!";
+    if (crmv.length < 7) errors.crmv = "CRMV inválido!";
+    if (!email.includes("@")) errors.email = "Digite um e-mail válido!";
+    if (password.length < 6) errors.password = "A senha deve ter pelo menos 6 caracteres!";
+    if (password !== confirmPassword) errors.confirmPassword = "As senhas não coincidem!";
+
+    setError(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleRegister = () => {
+    if (validateFields()) {
+      Alert.alert("Sucesso", "Cadastro realizado!");
+      router.replace("/screens/Login");
+    }
+  };
 
   return (
     <View style={styles.safeArea}>
@@ -28,17 +46,33 @@ export default function RegisterVet() {
 
         <View style={styles.formContainer}>
           <Text style={styles.label}>Nome do Veterinário</Text>
-          <TextInput style={styles.input} placeholder="Marcos Cardoso..." />
+          <TextInput
+            style={styles.input}
+            placeholder="Marcos Cardoso..."
+            value={nome}
+            onChangeText={setNome}
+          />
+          {error.nome && <Text style={styles.error}>{error.nome}</Text>}
 
           <Text style={styles.label}>CRMV</Text>
-          <TextInput style={styles.input} placeholder="CRMV-SP 12345.." />
+          <MaskedTextInput
+            mask="AA-99999"
+            style={styles.input}
+            placeholder="UF-12345"
+            value={crmv}
+            onChangeText={setCrmv}
+          />
+          {error.crmv && <Text style={styles.error}>{error.crmv}</Text>}
 
           <Text style={styles.label}>E-mail</Text>
           <TextInput
             style={styles.input}
             placeholder="E-mail"
             keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
           />
+          {error.email && <Text style={styles.error}>{error.email}</Text>}
 
           <Text style={styles.label}>Senha</Text>
           <TextInput
@@ -48,6 +82,7 @@ export default function RegisterVet() {
             value={password}
             onChangeText={setPassword}
           />
+          {error.password && <Text style={styles.error}>{error.password}</Text>}
 
           <Text style={styles.label}>Confirmar Senha</Text>
           <TextInput
@@ -57,10 +92,11 @@ export default function RegisterVet() {
             value={confirmPassword}
             onChangeText={setConfirmPassword}
           />
+          {error.confirmPassword && <Text style={styles.error}>{error.confirmPassword}</Text>}
 
           <TouchableOpacity
-            style={styles.button}
-            onPress={() => router.navigate("/screens/Login")}
+            style={[styles.button]}
+            onPress={handleRegister}
           >
             <Text style={styles.buttonText}>Cadastrar</Text>
           </TouchableOpacity>
@@ -77,7 +113,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexGrow: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 30,
@@ -106,10 +142,15 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 8,
     paddingHorizontal: 10,
-    marginBottom: 15,
+    marginBottom: 5,
     fontSize: 16,
     color: "#333",
     width: "100%",
+  },
+  error: {
+    color: "red",
+    fontSize: 14,
+    marginBottom: 10,
   },
   button: {
     backgroundColor: "#007bff",
@@ -118,6 +159,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
     width: "100%",
+  },
+  buttonDisabled: {
+    backgroundColor: "#ccc",
   },
   buttonText: {
     color: "#fff",
