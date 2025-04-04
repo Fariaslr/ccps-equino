@@ -1,8 +1,10 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { View, TouchableOpacity } from "react-native";
+import { useState } from "react";
 
 export default function Layout() {
+  const titleApp = "CCPS"
   return (
     <Tabs
       screenOptions={{
@@ -31,7 +33,7 @@ export default function Layout() {
       <Tabs.Screen
         name="Home"
         options={{
-          title: "Home",
+          title: titleApp,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home-outline" size={size} color={color} />
           ),
@@ -40,7 +42,7 @@ export default function Layout() {
       <Tabs.Screen
         name="prancheta"
         options={{
-          title: "Prancheta",
+          title: "Chamados",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="clipboard-outline" size={size} color={color} />
           ),
