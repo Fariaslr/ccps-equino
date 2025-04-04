@@ -4,7 +4,6 @@ import { View, TouchableOpacity } from "react-native";
 import { useState } from "react";
 
 export default function Layout() {
-  const titleApp = "CCPS"
   return (
     <Tabs
       screenOptions={{
@@ -33,7 +32,7 @@ export default function Layout() {
       <Tabs.Screen
         name="Home"
         options={{
-          title: titleApp,
+          title: "Home",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home-outline" size={size} color={color} />
           ),
