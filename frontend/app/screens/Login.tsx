@@ -25,7 +25,7 @@ export default function LoginScreen() {
             uri: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
           }}
         />
-        <Text style={styles.title}>Bem-vindo!</Text>
+        <Text style={styles.title}>CCPS</Text>
 
         <View style={styles.formContainer}>
           <Text style={styles.label}>E-mail</Text>
@@ -46,7 +46,7 @@ export default function LoginScreen() {
             onChangeText={setPassword}
           />
 
-          <TouchableOpacity style={styles.button} onPress={ ()=> router.push("/screens/home/HomeVet") }>
+          <TouchableOpacity style={styles.button} onPress={ ()=> router.push("/screens/home/Home") }>
             <Text style={styles.buttonText}>Entrar</Text>
           </TouchableOpacity>
 
@@ -65,7 +65,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f8f9fa",
+    backgroundColor: "#4CAF50",
   },
   container: {
     flexGrow: 1,
@@ -78,12 +78,16 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#333",
+    color: "#fff",
     textAlign: "center",
   },
   formContainer: {
     width: "100%",
     maxWidth: 350,
+    backgroundColor: "#fff",
+    paddingVertical : 30,
+    paddingHorizontal: 20,
+    borderRadius: 20,
   },
   label: {
     fontSize: 16,

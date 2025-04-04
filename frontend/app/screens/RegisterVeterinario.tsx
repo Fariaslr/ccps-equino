@@ -109,25 +109,29 @@ export default function RegisterVeterinario() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f8f9fa",
+    backgroundColor: "#4CAF50",
   },
   container: {
     flexGrow: 1,
     justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingVertical: 30,
+    marginTop: 60,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#333",
+    color: "#fff",
     textAlign: "center",
   },
   formContainer: {
     width: "100%",
     maxWidth: 350,
+    backgroundColor: "#fff",
+    paddingVertical : 30,
+    paddingHorizontal: 20,
+    borderRadius: 20,
   },
   label: {
     fontSize: 16,
@@ -142,15 +146,10 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 8,
     paddingHorizontal: 10,
-    marginBottom: 5,
+    marginBottom: 15,
     fontSize: 16,
     color: "#333",
     width: "100%",
-  },
-  error: {
-    color: "red",
-    fontSize: 14,
-    marginBottom: 10,
   },
   button: {
     backgroundColor: "#007bff",
@@ -159,9 +158,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
     width: "100%",
-  },
-  buttonDisabled: {
-    backgroundColor: "#ccc",
   },
   buttonText: {
     color: "#fff",
@@ -172,5 +168,21 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginBottom: 20,
+  },
+  error: {
+    color: "red",
+    fontSize: 12,
+    marginBottom: 10,
+  },
+  buttonDisabled: {
+    backgroundColor: "#ccc",
+  },
+  address: {
+    fontSize: 14,
+    color: "#333",
+    backgroundColor: "#e9ecef",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
   },
 });

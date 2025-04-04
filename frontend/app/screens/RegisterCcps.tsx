@@ -59,13 +59,6 @@ export default function RegisterCcps() {
     }
   };
 
-  const isFormValid =
-    nome.trim() !== "" &&
-    cnpj.length === 18 &&
-    cep.length === 9 &&
-    telefone.length === 15 &&
-    !error.cep; // Garante que o erro do CEP foi resolvido
-
   return (
     <SafeAreaProvider style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -141,25 +134,29 @@ export default function RegisterCcps() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f8f9fa",
+    backgroundColor: "#4CAF50",
   },
   container: {
     flexGrow: 1,
     justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingVertical: 30,
+    marginTop: 60,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#333",
+    color: "#fff",
     textAlign: "center",
   },
   formContainer: {
     width: "100%",
     maxWidth: 350,
+    backgroundColor: "#fff",
+    paddingVertical : 30,
+    paddingHorizontal: 20,
+    borderRadius: 20,
   },
   label: {
     fontSize: 16,
