@@ -1,15 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Dimensions, Pressable } from "react-native";
-import Svg, { Circle } from "react-native-svg";
+import {
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
 
-const { width } = Dimensions.get("window");
+import InstallationsCarousel from "@/components/InstalationsCarousel";
+import { installations } from "@/src/data/instalationsData";
+import ProgressGraph from "@/components/ProgressGraph";
 
 const HomeScreen = () => {
-  const [progress, setProgress] = useState<number>(44);
+  const [progress, setProgress] = useState<number>(0);
   const [greeting, setGreeting] = useState("");
 
-  const strokeDasharray = `${progress * 2.83} ${283 - progress * 2.83}`;
-
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          return 0;
+        }
+        return prev + 1;
+      });
+    }, 600); 
+  
+    return () => clearInterval(interval); 
+  }, []);
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -19,90 +35,37 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.greeting}>{greeting}, Mel 👋</Text>
-      <Pressable style={styles.progressContainer} android_ripple={{ color: "#ddd" }}>
-        <View style={styles.content}>
-          <Text style={styles.title}>Progresso das Etapas</Text>
-        </View>
-
-        <View style={styles.graphContainer}>
-          <Svg width={120} height={120} viewBox="0 0 100 100">
-            <Circle cx="50" cy="50" r="45" stroke="#ddd" strokeWidth="10" fill="none" />
-            <Circle
-              cx="50"
-              cy="50"
-              r="45"
-              stroke="green"
-              strokeWidth="10"
-              fill="none"
-              strokeDasharray={strokeDasharray}
-              strokeLinecap="round"
-              transform="rotate(-90 50 50)"
-            />
-          </Svg>
-          <Text style={styles.progressText}>{progress}%</Text>
-        </View>
-      </Pressable>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.inner}>
+        <Text style={styles.greeting}>
+          {greeting}, <Text style={styles.username}>Mel</Text> 👋
+        </Text>
+        <ProgressGraph progress={progress}/>
+        <InstallationsCarousel installations={installations}/>
+      </ScrollView>
+      
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
-    alignItems: "center",
-    paddingTop: 10,
+    backgroundColor: "#f0f4f8",
+  },
+  inner: {
+    flex: 1,
+    padding: 20,
   },
   greeting: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "600",
-    alignSelf: "flex-start",
-    marginTop: 20,
-    marginLeft: 20,
-    marginBottom: 30,
-    color: "#333",
-  },
-  progressContainer: {
-    width: width * 0.90,
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-  },
-  content: {
-    width: "100%",
     marginBottom: 20,
-    alignItems: "flex-start",
-    paddingHorizontal: 10,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: "bold",
     color: "#333",
-    marginBottom: 5,
   },
-  description: {
-    fontSize: 16,
-    color: "#666",
-  },
-  graphContainer: {
-    position: "relative",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  progressText: {
-    position: "absolute",
-    fontSize: 20,
+  username: {
     fontWeight: "bold",
-    color: "#333",
+    color: "#007bff",
   },
 });
 
