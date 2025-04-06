@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import Svg, { Circle } from "react-native-svg";
@@ -8,6 +9,7 @@ interface Props {
 
 const ProgressGraph: React.FC<Props> = ({ progress }) => {
   const strokeDasharray = `${progress * 2.83} ${283 - progress * 2.83}`;
+  const router = useRouter();
 
   const getProgressColor = (value: number) => {
     if (value <= 30) return "#FF3B30"; 
@@ -21,6 +23,7 @@ const ProgressGraph: React.FC<Props> = ({ progress }) => {
     <Pressable
       style={styles.progressContainer}
       android_ripple={{ color: "#ddd" }}
+      onPress={() => router.push("/home/prancheta")}
     >
       <View style={styles.content}>
         <Text style={styles.title}>Progresso das Etapas</Text>

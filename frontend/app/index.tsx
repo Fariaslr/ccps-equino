@@ -64,8 +64,7 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1,
-    backgroundColor: "#4CAF50",
+    flex: 1
   },
   container: {
     flexGrow: 1,
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#fff",
+    color: "black",
     textAlign: "center",
   },
   formContainer: {
