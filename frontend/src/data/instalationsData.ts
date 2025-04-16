@@ -2,7 +2,7 @@ export const installations = [
   {
     title: "Unidade Laboratorial",
     description:
-      "Sala de Manipulação de Sêmen com óculo e dupla porta, e Sala de Lavagem e Esterilização com áreas definidas.",
+      "a) Sala de Manipulação de Sêmencom óculo com dupla porta para recepção do material coletado\n\nb) Sala de Lavagem e Esterilização de Material com áreas definidas para ambas as atividades",
     image: { uri: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c" },
   },
   {

@@ -1,31 +1,17 @@
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
-
+import { Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import InstallationsCarousel from "@/components/InstalationsCarousel";
-import { installations } from "@/src/data/instalationsData";
 import ProgressGraph from "@/components/ProgressGraph";
+import { installations } from "@/src/data/instalationsData";
+import { FONT_SIZES, COLORS } from "@/constants/theme";
+
+import CardGroup from "@/components/CardList";
+import CheckListSection from "@/components/CheckListSection";
 
 const HomeScreen = () => {
-  const [progress, setProgress] = useState<number>(0);
+  const progress = 100;
+  const name = "Lucas";
   const [greeting, setGreeting] = useState("");
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          return 0;
-        }
-        return prev + 1;
-      });
-    }, 600); 
-  
-    return () => clearInterval(interval); 
-  }, []);
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -36,14 +22,15 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.inner}>
+      <ScrollView contentContainerStyle={{ padding: 20 }}>
         <Text style={styles.greeting}>
-          {greeting}, <Text style={styles.username}>Mel</Text> 👋
+          {greeting}, {name} 👋
         </Text>
-        <ProgressGraph progress={progress}/>
-        <InstallationsCarousel installations={installations}/>
+        <ProgressGraph progress={progress} />
+        <CardGroup />
+        <CheckListSection />
+        <InstallationsCarousel installations={installations} />
       </ScrollView>
-      
     </SafeAreaView>
   );
 };
@@ -51,21 +38,13 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f4f8",
-  },
-  inner: {
-    flex: 1,
-    padding: 20,
+    backgroundColor: COLORS.background,
   },
   greeting: {
-    fontSize: 24,
+    fontSize: FONT_SIZES.large,
     fontWeight: "600",
-    marginBottom: 20,
-    color: "#333",
-  },
-  username: {
-    fontWeight: "bold",
-    color: "#007bff",
+    marginBottom: 15,
+    color: COLORS.text,
   },
 });
 

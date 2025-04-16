@@ -7,9 +7,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  Modal,
 } from "react-native";
 import InstallationModal from "./InstallationModal";
+import { FONT_SIZES } from "@/constants/theme";
 
 const { width } = Dimensions.get("window");
 
@@ -79,14 +79,13 @@ const InstallationsCarousel: React.FC<Props> = ({ installations }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: 0,
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 10,
+    fontSize: FONT_SIZES.large,
+    fontWeight: "600",
+    color: "#444",
+    marginBottom: 20,
   },
   card: {
     width: CARD_WIDTH,

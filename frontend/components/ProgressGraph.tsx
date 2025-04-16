@@ -12,8 +12,8 @@ const ProgressGraph: React.FC<Props> = ({ progress }) => {
   const router = useRouter();
 
   const getProgressColor = (value: number) => {
-    if (value <= 30) return "#FF3B30"; 
-    if (value <= 70) return "#FFD60A"; 
+    if (value <= 1) return "#FF3B30"; 
+    if (value <= 99) return "#FFD60A"; 
     return "#4CAF50"; 
   };
 
@@ -23,7 +23,7 @@ const ProgressGraph: React.FC<Props> = ({ progress }) => {
     <Pressable
       style={styles.progressContainer}
       android_ripple={{ color: "#ddd" }}
-      onPress={() => router.push("/home/prancheta")}
+      onPress={() => router.push("/home/validacao")}
     >
       <View style={styles.content}>
         <Text style={styles.title}>Progresso das Etapas</Text>
