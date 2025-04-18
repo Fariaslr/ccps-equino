@@ -1,7 +1,6 @@
 package com.br.ccps.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -33,16 +32,10 @@ public class Ccps {
 	private String cidade;
 
 	private String estado;
-
-	@Column(name = "nome_veterinario")
-	private String nomeVeterinario;
-
-	@NotNull
-	private String crmv;
-
-	private String email;
-
-	private String telefone;
+	
+	@ManyToOne
+    @JoinColumn(name = "veterinario_id")
+    private Veterinario veterinario;
 
 	@Column(name = "codigo_aprovado", unique = true)
 	private String codigoAprovado;
