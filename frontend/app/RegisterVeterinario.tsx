@@ -29,7 +29,7 @@ export default function RegisterVeterinario() {
   const handleRegister = () => {
     if (validateFields()) {
       Alert.alert("Sucesso", "Cadastro realizado!");
-      router.replace("/screens/Login");
+      router.push("/");
     }
   };
 

@@ -39,5 +39,10 @@ public class Operacao {
 
     private boolean sistemaEscoamento;
     private Date dataAprovacaoEscoamento;
+    
+    public void setCcps(Ccps ccps) {
+        this.ccps = ccps;
+    }
+
 }
 
