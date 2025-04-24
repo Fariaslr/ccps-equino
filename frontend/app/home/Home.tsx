@@ -9,7 +9,7 @@ import CardGroup from "@/components/CardList";
 import CheckListSection from "@/components/CheckListSection";
 
 const HomeScreen = () => {
-  const progress = 100;
+  const progress = 29;
   const name = "Lucas";
   const [greeting, setGreeting] = useState("");
 

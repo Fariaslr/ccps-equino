@@ -5,8 +5,8 @@ export const checkList = [
         {
           title: "1. Documentação da Empresa",
           items: [
-            { title: "Contrato Social ou Ata de Constituição", done: false, route: "/documentos/empresa/contrato" },
-            { title: "Cadastro Nacional da Pessoa Jurídica (CNPJ)", done: false, route: "/documentos/empresa/cnpj" },
+            { title: "Contrato Social ou Ata de Constituição", done: true, route: "/documentos/empresa/contrato" },
+            { title: "Cadastro Nacional da Pessoa Jurídica (CNPJ)", done: true, route: "/documentos/empresa/cnpj" },
             { title: "Inscrição Estadual", done: false, route: "/documentos/empresa/inscricao" },
           ],
         },
@@ -19,7 +19,7 @@ export const checkList = [
         {
           title: "3. Planta e Memorial",
           items: [
-            { title: "Planta-baixa com todas as instalações", done: false, route: "/documentos/planta/baixa" },
+            { title: "Planta-baixa com todas as instalações", done: true, route: "/documentos/planta/baixa" },
             { title: "Planta de localização com coordenadas", done: false, route: "/documentos/planta/localizacao" },
             { title: "Memorial descritivo", done: false, route: "/documentos/planta/memorial" },
           ],

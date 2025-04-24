@@ -19,7 +19,7 @@ public class Ccps {
 	private UUID id;
 
 	@Column(name = "nome_ccps")
-	private String nomeCcps;
+	private String nome;
 
 	@Column(length = 18)
 	private String cnpj;
