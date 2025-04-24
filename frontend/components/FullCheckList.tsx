@@ -25,23 +25,23 @@ export default function FullChecklist() {
           <View key={index} style={styles.chapterContainer}>
             <View style={styles.chapterHeader}>
               <View style={{ flex: 1 }}>
-                <Text style={styles.chapterTitle}>{chapter.title}</Text>
+                <Text style={styles.chapterTitle}>{String(chapter.title || 'Sem título')}</Text>
               </View>
               <Text style={styles.progressText}>{percent}%</Text>
             </View>
 
             {chapter.sections.map((section, secIdx) => (
               <View key={secIdx} style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>{section.title}</Text>
+                <Text style={styles.sectionTitle}>{String(section.title || 'Sem seção')}</Text>
                 {section.items.map((item, itemIdx) => (
                   <View key={itemIdx} style={styles.itemRow}>
                     <Ionicons
-                      name={item.done ? "checkmark-circle" : "ellipse-outline"}
+                      name={item.done ? 'checkmark-circle' : 'ellipse-outline'}
                       size={18}
-                      color={item.done ? "green" : "gray"}
+                      color={item.done ? 'green' : 'gray'}
                       style={{ marginRight: 8 }}
                     />
-                    <Text style={styles.itemText}>{item.title}</Text>
+                    <Text style={styles.itemText}>{String(item.title || 'Sem item')}</Text>
                   </View>
                 ))}
               </View>
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   pageTitle: {
-    fontSize: 20,
+    fontSize: FONT_SIZES.large,
     fontWeight: 'bold',
     marginBottom: 16,
   },
@@ -74,11 +74,11 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   chapterTitle: {
-    fontSize: 18,
+    fontSize: FONT_SIZES.large,
     fontWeight: 'bold',
   },
   progressText: {
-    fontSize: 16,
+    fontSize: FONT_SIZES.medium,
     fontWeight: '600',
     color: '#666',
   },
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   itemText: {
-    fontSize: 14,
+    fontSize: FONT_SIZES.small,
     flex: 1,
   },
 });

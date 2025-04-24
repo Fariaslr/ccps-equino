@@ -32,7 +32,7 @@ export const checkList = [
         {
           title: "1. Condições Gerais",
           items: [
-            { title: "Cerca perimetral ou barreira", done: false, route: "/exigencias/gerais/cerca" },
+            { title: "Cerca perimetral ou barreira", done: true, route: "/exigencias/gerais/cerca" },
             { title: "Localização livre de alagamentos", done: false, route: "/exigencias/gerais/localizacao" },
           ],
         },

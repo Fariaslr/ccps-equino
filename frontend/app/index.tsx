@@ -52,7 +52,7 @@ export default function LoginScreen() {
 
           <TouchableOpacity
             style={[styles.button, styles.secondaryButton]}
-            onPress={() => router.push("/RegisterCcps")}
+            onPress={() => router.push("/RegisterVeterinario")}
           >
             <Text style={styles.buttonText}>Criar Conta</Text>
           </TouchableOpacity>

@@ -4,7 +4,7 @@ import { StyleSheet, ScrollView } from "react-native";
 export default function Validacao() {
   return (
     <ScrollView style={styles.container}>
-      <FullChecklist />
+      <FullChecklist /> 
     </ScrollView>
   );
 }

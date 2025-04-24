@@ -49,4 +49,22 @@ public class Sala {
 
     @Column(name = "codigo_aprovado", unique = true)
     private String codigoAprovado;
+
+	public Ccps getCcps() {
+		return ccps;
+	}
+
+	public void setCcps(Ccps ccps) {
+		this.ccps = ccps;
+	}
+
+	public Tipo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
+	}
+    
+    
 }
