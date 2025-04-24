@@ -1,7 +1,8 @@
-import api from './index'; // seu axios instance
-import { CCPS } from '../types/models';
+import api from '../api';
+import { Ccps } from '../types/models'; // seu axios instance
 
-export const createCcps = async (ccps: CCPS) => {
+
+export const createCcps = async (ccps: Ccps) => {
   const response = await api.post('/ccps', ccps);
   return response.data;
 };
@@ -16,7 +17,7 @@ export const getCcpsById = async (id: string) => {
   return response.data;
 };
 
-export const updateCcps = async (id: string, ccps: Partial<CCPS>) => {
+export const updateCcps = async (id: string, ccps: Partial<Ccps>) => {
   const response = await api.put(`/ccps/${id}`, ccps);
   return response.data;
 };
