@@ -1,19 +1,20 @@
 export interface Tipo {
-  id: string; // UUID
+  id: string;
   nomeTipo: string;
 }
 export interface Veterinario {
-  id: string; // UUID
+  id: string;
   nome: string;
   crmv: string;
   cpf: string;
-  dataNascimento: string; // data em formato ISO 8601
+  dataNascimento: string; 
   email: string;
+  senha: string;
   telefone: string;
-  ccpsList: Ccps[]; // Relacionamento com a lista de CCPS
+  ccpsList: Ccps[];
 }
 export interface Ccps {
-  id: string; // UUID
+  id: string; 
   nomeCcps: string;
   cnpj: string;
   cep: string;

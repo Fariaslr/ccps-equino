@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { useRouter } from "expo-router";
+import { FONT_SIZES } from "@/constants/theme";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -25,7 +26,7 @@ export default function LoginScreen() {
             uri: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
           }}
         />
-        <Text style={styles.title}>CCPS</Text>
+        <Text style={styles.title}>Veterinário</Text>
 
         <View style={styles.formContainer}>
           <Text style={styles.label}>E-mail</Text>
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   title: {
-    fontSize: 26,
+    fontSize: FONT_SIZES.xlarge,
     fontWeight: "bold",
     marginBottom: 20,
     color: "black",
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   label: {
-    fontSize: 16,
+    fontSize: FONT_SIZES.medium,
     fontWeight: "bold",
     marginBottom: 5,
     color: "#555",
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: FONT_SIZES.medium,
   },
   logo: {
     width: 100,

@@ -31,7 +31,7 @@ export default function RegisterCcps() {
 
       if (data.resultado === "1") {
         setEndereco(`${data.tipo_logradouro} ${data.logradouro}, ${data.bairro}, ${data.cidade} - ${data.uf}`);
-        setError(prev => ({ ...prev, cep: undefined })); // Remove o erro do CEP
+        setError(prev => ({ ...prev, cep: undefined }));
       } else {
         setError(prev => ({ ...prev, cep: "CEP inválido!" }));
         setEndereco("");

@@ -1,5 +1,5 @@
 import api from '../api';
-import { Ccps } from '../types/models'; // seu axios instance
+import { Ccps } from '../types/models';
 
 
 export const createCcps = async (ccps: Ccps) => {
