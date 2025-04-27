@@ -1,5 +1,5 @@
 import api from '../api';
-import { Ccps } from '../types/models';
+import { Ccps } from '../models/Tipo';
 
 
 export const createCcps = async (ccps: Ccps) => {

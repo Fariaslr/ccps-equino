@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import { useAppContext } from "@/src/context/authContext";  // Use o hook correto
 import InstallationsCarousel from "@/components/InstalationsCarousel";
 import ProgressGraph from "@/components/ProgressGraph";
 import { installations } from "@/src/data/instalationsData";
 import { FONT_SIZES, COLORS } from "@/constants/theme";
-
 import CardGroup from "@/components/CardList";
 import CheckListSection from "@/components/CheckListSection";
 
 const HomeScreen = () => {
+  const { veterinario } = useAppContext(); 
+
   const progress = 29;
-  const name = "Lucas";
   const [greeting, setGreeting] = useState("");
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{ padding: 20 }}>
         <Text style={styles.greeting}>
-          {greeting}, {name} 👋
+          {greeting}, {veterinario?.nome ?? "Visitante"} 👋
         </Text>
         <ProgressGraph progress={progress} />
         <CardGroup />

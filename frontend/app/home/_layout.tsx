@@ -15,7 +15,7 @@ export default function Layout() {
     Animated.timing(slideAnim, {
       toValue: 0,
       duration: 300,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -23,7 +23,7 @@ export default function Layout() {
     Animated.timing(slideAnim, {
       toValue: width,
       duration: 300,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start(() => setVisible(false));
   };
 
@@ -50,11 +50,7 @@ export default function Layout() {
           headerRight: () => (
             <View style={{ flexDirection: "row", gap: 15, marginRight: 15 }}>
               <TouchableOpacity onPress={openPanel}>
-                <Ionicons
-                  name="notifications-outline"
-                  size={24}
-                  color="black"
-                />
+                <Ionicons name="notifications-outline" size={24} color="black" />
               </TouchableOpacity>
             </View>
           ),

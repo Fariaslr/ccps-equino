@@ -1,35 +1,76 @@
 import { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Alert,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { MaskedTextInput } from "react-native-mask-text";
+import axios from "axios";
+import api from "@/src/api";
 
 export default function RegisterVeterinario() {
   const router = useRouter();
-  
+
   const [nome, setNome] = useState("");
   const [crmv, setCrmv] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState<{ nome?: string; crmv?: string; email?: string; password?: string; confirmPassword?: string }>({});
+  const [error, setError] = useState<{
+    nome?: string;
+    crmv?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+  }>({});
 
   const validateFields = () => {
-    let errors: { nome?: string; crmv?: string; email?: string; password?: string; confirmPassword?: string } = {};
+    let errors: {
+      nome?: string;
+      crmv?: string;
+      email?: string;
+      password?: string;
+      confirmPassword?: string;
+    } = {};
 
     if (!nome.trim()) errors.nome = "Nome do veterinário é obrigatório!";
     if (crmv.length < 7) errors.crmv = "CRMV inválido!";
     if (!email.includes("@")) errors.email = "Digite um e-mail válido!";
-    if (password.length < 6) errors.password = "A senha deve ter pelo menos 6 caracteres!";
-    if (password !== confirmPassword) errors.confirmPassword = "As senhas não coincidem!";
+    if (password.length < 6)
+      errors.password = "A senha deve ter pelo menos 6 caracteres!";
+    if (password !== confirmPassword)
+      errors.confirmPassword = "As senhas não coincidem!";
 
     setError(errors);
     return Object.keys(errors).length === 0;
   };
 
-  const handleRegister = () => {
-    if (validateFields()) {
-      Alert.alert("Sucesso", "Cadastro realizado!");
+  const handleRegister = async () => {
+    if (!validateFields()) return;
+
+    try {
+      const response = await axios.post("http://192.168.0.175:8080/veterinarios", {
+        nome,
+        crmv,
+        email,
+        senha: password,
+      });
+
+      Alert.alert("Sucesso", "Veterinário cadastrado com sucesso!");
       router.push("/");
+    } catch (error: any) {
+      console.error("Erro ao cadastrar:", error);
+      if (error.response?.status === 400) {
+        Alert.alert("Erro", "Verifique os dados informados.");
+      } else {
+        Alert.alert("Erro", "Não foi possível cadastrar o veterinário.");
+      }
     }
   };
 
@@ -92,12 +133,11 @@ export default function RegisterVeterinario() {
             value={confirmPassword}
             onChangeText={setConfirmPassword}
           />
-          {error.confirmPassword && <Text style={styles.error}>{error.confirmPassword}</Text>}
+          {error.confirmPassword && (
+            <Text style={styles.error}>{error.confirmPassword}</Text>
+          )}
 
-          <TouchableOpacity
-            style={[styles.button]}
-            onPress={handleRegister}
-          >
+          <TouchableOpacity style={[styles.button]} onPress={handleRegister}>
             <Text style={styles.buttonText}>Cadastrar</Text>
           </TouchableOpacity>
         </View>
@@ -129,7 +169,7 @@ const styles = StyleSheet.create({
     width: "100%",
     maxWidth: 350,
     backgroundColor: "#fff",
-    paddingVertical : 30,
+    paddingVertical: 30,
     paddingHorizontal: 20,
     borderRadius: 20,
   },
