@@ -1,32 +1,5 @@
 export const checkList = [
     {
-      title: "📄 Capítulo I – Documentos Obrigatórios",
-      sections: [
-        {
-          title: "1. Documentação da Empresa",
-          items: [
-            { title: "Contrato Social ou Ata de Constituição", done: true, route: "/documentos/empresa/contrato" },
-            { title: "Cadastro Nacional da Pessoa Jurídica (CNPJ)", done: true, route: "/documentos/empresa/cnpj" },
-            { title: "Inscrição Estadual", done: false, route: "/documentos/empresa/inscricao" },
-          ],
-        },
-        {
-          title: "2. Responsabilidade Técnica",
-          items: [
-            { title: "ART emitida pelo CRMV", done: false, route: "/documentos/tecnica/art" },
-          ],
-        },
-        {
-          title: "3. Planta e Memorial",
-          items: [
-            { title: "Planta-baixa com todas as instalações", done: true, route: "/documentos/planta/baixa" },
-            { title: "Planta de localização com coordenadas", done: false, route: "/documentos/planta/localizacao" },
-            { title: "Memorial descritivo", done: false, route: "/documentos/planta/memorial" },
-          ],
-        },
-      ],
-    },
-    {
       title: "🏗️ Capítulo II – Exigências Físicas",
       sections: [
         {

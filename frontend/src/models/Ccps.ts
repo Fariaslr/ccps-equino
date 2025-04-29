@@ -1,4 +1,4 @@
-import { Veterinario } from "./Veterinario";
+import { Veterinario } from "./Usuario";
 
 export interface Ccps {
     id: string; 

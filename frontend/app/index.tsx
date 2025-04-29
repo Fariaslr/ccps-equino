@@ -1,47 +1,35 @@
-import { useEffect, useState } from "react";
-import { ActivityIndicator, View, Text } from "react-native";
+import { useEffect } from "react";
 import { useRouter } from "expo-router";
-import { checkBackendConnection, getAuthenticatedUser } from "@/src/services/authService";
+import { View, ActivityIndicator } from "react-native";
+import * as SecureStore from "expo-secure-store";
+import { setupDatabase } from "@/src/database/initDatabase";
 
-export default function IndexScreen() {
+export default function Index() {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const initializeApp = async () => {
+    setupDatabase(); 
+    const startApp = async () => {
       try {
-        const backendOk = await checkBackendConnection();
-        if (!backendOk) {
-          setError("Erro de conexão com o servidor.");
-          return;
-        }
+        const usuarioLogado = await SecureStore.getItemAsync("usuario");
 
-        const user = await getAuthenticatedUser();
-        if (user) {
+        if (usuarioLogado) {
           router.replace("/home/Home");
         } else {
           router.replace("/Login");
         }
-      } catch (err) {
-        setError("Erro inesperado.");
+      } catch (error) {
+        console.error("Erro ao verificar o usuário logado:", error);
+        router.replace("/Login");
       }
     };
 
-    initializeApp();
-  }, []);
-
-  if (error) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>{error}</Text>
-      </View>
-    );
-  }
+    startApp();
+  }, [router]);
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ActivityIndicator size="large" color="#4CAF50" />
-      <Text style={{ marginTop: 10 }}>Carregando...</Text>
+      <ActivityIndicator size="large" color="#007bff" />
     </View>
   );
 }

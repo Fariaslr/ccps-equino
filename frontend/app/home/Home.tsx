@@ -9,7 +9,7 @@ import CardGroup from "@/components/CardList";
 import CheckListSection from "@/components/CheckListSection";
 
 const HomeScreen = () => {
-  const { veterinario } = useAppContext(); 
+  const { usuario } = useAppContext(); 
 
   const progress = 29;
   const [greeting, setGreeting] = useState("");
@@ -25,7 +25,7 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{ padding: 20 }}>
         <Text style={styles.greeting}>
-          {greeting}, {veterinario?.nome ?? "Visitante"} 👋
+          {greeting}, {usuario?.nome ?? "Visitante"} 👋
         </Text>
         <ProgressGraph progress={progress} />
         <CardGroup />

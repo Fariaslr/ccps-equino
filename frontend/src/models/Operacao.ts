@@ -1,18 +1,33 @@
-import { Ccps } from "./Ccps";
-
 export interface Operacao {
-  id: string; 
-  ccps: Ccps; 
-  arquivosProcessosTecnologicos: boolean;
-  dataAprovacaoArquivos: string; 
-  fluxoOperacionalDefinido: boolean;
-  dataAprovacaoFluxo: string; 
-  medidasHigienicoSanitariasFuncionarios: boolean;
-  dataAprovacaoHigieneFunc: string; 
-  medidasHigienicoSanitariasVisitantes: boolean;
-  dataAprovacaoHigieneVisit: string; 
-  controlePragas: boolean;
-  dataAprovacaoControlePragas: string; 
-  sistemaEscoamento: boolean;
-  dataAprovacaoEscoamento: string;
+  id: string;
+  idCcps: string;
+
+  cercaPerimetralDataAprovacao: string | null;
+  cercaPerimetralValidado: boolean;
+
+  localizacaoLivreAlagamentoDataAprovacao: string | null;
+  localizacaoLivreAlagamentoValidado: boolean;
+
+  salaManipulacaoSemenDataAprovacao: string | null;
+  salaManipulacaoSemenValidado: boolean;
+
+  salaLavagemEsterilizacaoDataAprovacao: string | null;
+  salaLavagemEsterilizacaoValidado: boolean;
+
+  areaColetaSemenDataAprovacao: string | null;
+  areaColetaSemenValidado: boolean;
+
+  alojamentoDadoresDataAprovacao: string | null;
+  alojamentoDadoresValidado: boolean;
+
+  instalacaoAdministrativaDataAprovacao: string | null;
+  instalacaoAdministrativaValidado: boolean;
+
+  vestiariosBanheirosDataAprovacao: string | null;
+  vestiariosBanheirosValidado: boolean;
+
+  armazenamentoSemenDataAprovacao: string | null;
+  armazenamentoSemenValidado: boolean;
+
+  dataUltimaAtualizacao: string | null;
 }

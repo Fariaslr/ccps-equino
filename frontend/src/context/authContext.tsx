@@ -1,23 +1,26 @@
-import { createContext, useContext, useState } from "react";
-import { Veterinario } from "../models/Veterinario";
-import { useEffect } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { Usuario } from "../models/Usuario"; // Importa o modelo de Usuario
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type AppContextType = {
-  veterinario: Veterinario | null;
-  setVeterinario: (veterinario: Veterinario | null) => void;
+  usuario: Usuario | null;
+  setUsuario: (usuario: Usuario | null) => void;
   loadUserFromStorage: () => Promise<void>;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [veterinario, setVeterinario] = useState<Veterinario | null>(null);
+  const [usuario, setUsuario] = useState<Usuario | null>(null);
 
   const loadUserFromStorage = async () => {
-    const storedUser = await AsyncStorage.getItem("veterinario");
-    if (storedUser) {
-      setVeterinario(JSON.parse(storedUser));
+    try {
+      const storedUser = await AsyncStorage.getItem("usuario");
+      if (storedUser) {
+        setUsuario(JSON.parse(storedUser));
+      }
+    } catch (error) {
+      console.error("Erro ao carregar usuário do AsyncStorage:", error);
     }
   };
 
@@ -26,12 +29,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AppContext.Provider value={{ veterinario, setVeterinario }}>
+    <AppContext.Provider value={{ usuario, setUsuario, loadUserFromStorage }}>
       {children}
     </AppContext.Provider>
   );
 }
-
 
 export function useAppContext() {
   const context = useContext(AppContext);

@@ -6,7 +6,7 @@ import { useAppContext } from "../../src/context/authContext";
 
 export default function Perfil() {
   const router = useRouter();
-  const { veterinario, setVeterinario } = useAppContext();
+  const { usuario, setUsuario } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -16,8 +16,8 @@ export default function Perfil() {
   const handleLogout = async () => {
     try {
       await SecureStore.deleteItemAsync("usuario");
-      router.replace("/Login"); 
-      setVeterinario(null); 
+      router.replace("/Login");
+      setUsuario(null);
     } catch (error) {
       Alert.alert("Erro", "Não foi possível sair. Tente novamente.");
     }
@@ -31,26 +31,36 @@ export default function Perfil() {
     );
   }
 
-  if (!veterinario) {
+  if (!usuario) {
     return (
       <View style={styles.container}>
         <Text style={styles.value}>Dados do veterinário não encontrados.</Text>
+        <TouchableOpacity style={styles.button} onPress={handleLogout}>
+          <Text style={styles.buttonText}>Sair</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Perfil do Veterinário</Text>
-
       <Text style={styles.label}>Nome:</Text>
-      <Text style={styles.value}>{veterinario.nome || "Não disponível"}</Text>
+      <Text style={styles.value}>{usuario.nome || "Não disponível"}</Text>
 
       <Text style={styles.label}>CRMV:</Text>
-      <Text style={styles.value}>{veterinario.crmv || "Não disponível"}</Text>
+      <Text style={styles.value}>{usuario.crmv || "Não disponível"}</Text>
 
       <Text style={styles.label}>E-mail:</Text>
-      <Text style={styles.value}>{veterinario.email || "Não disponível"}</Text>
+      <Text style={styles.value}>{usuario.email || "Não disponível"}</Text>
+
+      <Text style={styles.label}>Data de nascimento:</Text>
+      <Text style={styles.value}>{usuario.data_nascimento || "Não disponível"}</Text>
+
+      <Text style={styles.label}>Telefone:</Text>
+      <Text style={styles.value}>{usuario.telefone || "Não disponível"}</Text>
+
+      <Text style={styles.label}>Tipo usuário:</Text>
+      <Text style={styles.value}>{usuario.tipo_usuario || "Não disponível"}</Text>
 
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Sair</Text>
@@ -64,12 +74,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "#fff",
-  },
-  titulo: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
   },
   label: {
     fontWeight: "600",
