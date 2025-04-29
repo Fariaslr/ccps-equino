@@ -41,7 +41,7 @@ export function setupDatabase() {
 
     db.runSync(`
   CREATE TABLE IF NOT EXISTS operacao (
-    id TEXT PRIMARY KEY,
+    id TEXT PRIMARY KEY,z'
     id_ccps TEXT NOT NULL,
 
     cerca_perimetral_data_aprovacao TEXT,

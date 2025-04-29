@@ -50,8 +50,7 @@ export default function CheckListSection() {
                     key={itemIndex}
                     onPress={() =>
                       router.push({
-                        pathname: "/chat",
-                        params: { titulo: item.title },
+                        pathname: `/chat/${item.route}`, // Use a rota correta com o tipoId, por exemplo.
                       })
                     }
                     style={styles.itemRow}

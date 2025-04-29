@@ -11,8 +11,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { MaskedTextInput } from "react-native-mask-text";
-import axios from "axios";
-import api from "@/src/api";
+import axios from "axios"
 
 export default function RegisterVeterinario() {
   const router = useRouter();
