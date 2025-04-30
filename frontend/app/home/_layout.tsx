@@ -1,14 +1,30 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { View, TouchableOpacity, Dimensions, Animated } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Dimensions,
+  Animated,
+  Platform,
+  Text,
+} from "react-native";
 import { useRef, useState } from "react";
 import NotificationDrawer from "@/components/NotificationDrawer";
+import { Picker } from "@react-native-picker/picker";
+import { useCcps } from "@/src/context/ccpsContext";
+import { useAppContext } from "@/src/context/authContext";
+import CcpsModal from "@/components/CcpsModal";
 
 const { width } = Dimensions.get("window");
 
 export default function Layout() {
   const [visible, setVisible] = useState(false);
+  const [ccpsModalVisible, setCcpsModalVisible] = useState(false);
   const slideAnim = useRef(new Animated.Value(width)).current;
+
+  const { ccpsList, currentCcps, setCurrentCcps } = useCcps();
+  const { usuario } = useAppContext();
+  const isVeterinario = usuario?.tipo_usuario === "VETERINARIO";
 
   const openPanel = () => {
     setVisible(true);
@@ -47,10 +63,28 @@ export default function Layout() {
           },
           headerStyle: { backgroundColor: "#4CAF50" },
           headerTitleStyle: { color: "white" },
+          headerLeft: () => (
+            <View style={{ paddingLeft: 10 }}>
+              {isVeterinario && (
+                <TouchableOpacity
+                  style={{ padding: 5 }}
+                  onPress={() => setCcpsModalVisible(true)}
+                >
+                  <Text style={{ color: "white" }}>
+                    {currentCcps?.nomeCcps ?? "Selecionar CCPS"}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          ),
           headerRight: () => (
             <View style={{ flexDirection: "row", gap: 15, marginRight: 15 }}>
               <TouchableOpacity onPress={openPanel}>
-                <Ionicons name="notifications-outline" size={24} color="black" />
+                <Ionicons
+                  name="notifications-outline"
+                  size={24}
+                  color="white"
+                />
               </TouchableOpacity>
             </View>
           ),
@@ -90,6 +124,10 @@ export default function Layout() {
         slideAnim={slideAnim}
         onClose={closePanel}
         notifications={mockNotifications}
+      />
+      <CcpsModal
+        visible={ccpsModalVisible}
+        onClose={() => setCcpsModalVisible(false)}
       />
     </>
   );

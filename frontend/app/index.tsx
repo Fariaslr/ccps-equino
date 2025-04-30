@@ -2,14 +2,13 @@ import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import { View, ActivityIndicator } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import { populateDatabase, setupDatabase } from "@/src/database/initDatabase";
+import { populateSalas, selectOperacao } from "@/src/database/initDatabase";
+import { listarSalasPorCcps } from "@/src/services/salaService";
 
 export default function Index() {
   const router = useRouter();
 
-  useEffect(() => {
-    setupDatabase(); 
-    //populateDatabase();
+  useEffect(() => {    
     const startApp = async () => {
       try {
         const usuarioLogado = await SecureStore.getItemAsync("usuario");

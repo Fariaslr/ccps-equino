@@ -1,4 +1,4 @@
-import { Veterinario } from "./Usuario";
+import { Usuario } from "./Usuario";
 
 export interface Ccps {
     id: string; 
@@ -8,7 +8,7 @@ export interface Ccps {
     endereco: string;
     cidade: string;
     estado: string;
-    veterinario: Veterinario; 
+    veterinario: Usuario; 
     codigoAprovado: string;
     dataValidade: string; 
   }
