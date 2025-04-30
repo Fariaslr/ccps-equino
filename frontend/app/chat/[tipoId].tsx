@@ -1,4 +1,4 @@
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack  } from "expo-router";
 import { View, Text, ScrollView, StyleSheet, ActivityIndicator } from "react-native";
 import { useEffect, useState } from "react";
 import { listarSalasPorCcps } from "@/src/services/salaService";

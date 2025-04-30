@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import { View, ActivityIndicator } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import { populateSalas, selectOperacao } from "@/src/database/initDatabase";
-import { listarSalasPorCcps } from "@/src/services/salaService";
+import { initDatabase, populateDatabase } from "@/src/database/initDatabase";
 
 export default function Index() {
   const router = useRouter();

@@ -1,8 +1,6 @@
 import { openDatabaseSync } from "expo-sqlite";
 import { DATABASE_NAME } from "./schema";
 import * as FileSystem from "expo-file-system";
-import { Sala } from "../models/Sala";
-import { Ccps } from "../models/Ccps";
 import { Tipo } from "../models/Tipo";
 
 export function initDatabase() {
@@ -81,14 +79,6 @@ export function initDatabase() {
     `);
 
     db.runSync(`
-      CREATE TABLE IF NOT EXISTS ccpsList (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        usuario_id TEXT,
-        ccps_data TEXT
-      );
-    `);
-
-    db.runSync(`
       CREATE TABLE IF NOT EXISTS operacao (
         id TEXT PRIMARY KEY,
         id_ccps TEXT NOT NULL,
@@ -139,73 +129,34 @@ export function populateDatabase() {
         ('1', 'CCPS São Paulo', '12345678000199', '01001000', 'Rua A, 123', 'São Paulo', 'SP', '1', 'SP123', '2026-12-31');
     `);
 
-    // Inserir múltiplas combinações em operacao
-    const totalCombinacoes = 16;
-    for (let i = 0; i < totalCombinacoes; i++) {
-      const bin = i.toString(2).padStart(9, '0').split('').map(Number); // [0,1,0,1,...]
+    db.runSync(`
+      INSERT OR IGNORE INTO operacao (
+        id, id_ccps,
+        cerca_perimetral_data_aprovacao, cerca_perimetral_validado,
+        localizacao_livre_alagamento_data_aprovacao, localizacao_livre_alagamento_validado,
+        sala_manipulacao_semen_data_aprovacao, sala_manipulacao_semen_validado,
+        sala_lavagem_esterilizacao_data_aprovacao, sala_lavagem_esterilizacao_validado,
+        area_coleta_semen_data_aprovacao, area_coleta_semen_validado,
+        alojamento_dadores_data_aprovacao, alojamento_dadores_validado,
+        instalacao_administrativa_data_aprovacao, instalacao_administrativa_validado,
+        vestiarios_banheiros_data_aprovacao, vestiarios_banheiros_validado,
+        armazenamento_semen_data_aprovacao, armazenamento_semen_validado,
+        data_ultima_atualizacao
+      ) VALUES (
+        '1', '1',
+        '2025-04-01', 1,
+        NULL, NULL,
+        '2025-04-01', 1,
+        NULL, NULL,
+        '2025-04-01', 1,
+        NULL, NULL,
+        '2025-04-01', 1,
+        NULL, NULL,
+        '2025-04-01', 1, -- <=== Adicionado valor faltante aqui
+        '2025-04-28'
+      );
+    `);
 
-      db.runSync(`
-        INSERT OR IGNORE INTO operacao (
-          id, id_ccps,
-          cerca_perimetral_data_aprovacao, cerca_perimetral_validado,
-          localizacao_livre_alagamento_data_aprovacao, localizacao_livre_alagamento_validado,
-          sala_manipulacao_semen_data_aprovacao, sala_manipulacao_semen_validado,
-          sala_lavagem_esterilizacao_data_aprovacao, sala_lavagem_esterilizacao_validado,
-          area_coleta_semen_data_aprovacao, area_coleta_semen_validado,
-          alojamento_dadores_data_aprovacao, alojamento_dadores_validado,
-          instalacao_administrativa_data_aprovacao, instalacao_administrativa_validado,
-          vestiarios_banheiros_data_aprovacao, vestiarios_banheiros_validado,
-          armazenamento_semen_data_aprovacao, armazenamento_semen_validado,
-          data_ultima_atualizacao
-        ) VALUES (
-          '${i + 1}', '1',
-          '2025-04-01', ${bin[0]},
-          '2025-04-01', ${bin[1]},
-          '2025-04-01', ${bin[2]},
-          '2025-04-01', ${bin[3]},
-          '2025-04-01', ${bin[4]},
-          '2025-04-01', ${bin[5]},
-          '2025-04-01', ${bin[6]},
-          '2025-04-01', ${bin[7]},
-          '2025-04-01', ${bin[8]},
-          '2025-04-28'
-        );
-      `);
-    }
-
-    console.log("Banco populado com combinações de operações e dados de usuários.");
-  } catch (error) {
-    console.error("Erro ao popular banco de dados:", error);
-  }
-}
-
-export async function dropDatabase() {
-  const dbPath = `${FileSystem.documentDirectory}SQLite/${DATABASE_NAME}`;
-  const exists = await FileSystem.getInfoAsync(dbPath);
-  if (exists.exists) {
-    await FileSystem.deleteAsync(dbPath);
-    console.log("Banco de dados deletado.");
-  } else {
-    console.log("Banco de dados não encontrado.");
-  }
-}
-
-export async function selectOperacao(): Promise<any[]> {
-  const db = openDatabaseSync(DATABASE_NAME);
-  try {
-    const resultados = db.getAllSync("SELECT * FROM sala;");
-    return resultados;
-  } catch (error) {
-    console.error("Erro ao buscar registros da tabela operacao:", error);
-    return [];
-  }
-}
-
-
-export function populateSalas() {
-  const db = openDatabaseSync("ccps.db");
-
-  try {
     const tipos = db.getAllSync("SELECT id, nome_tipo FROM tipo;") as Tipo[];
     const dataHoje = new Date().toISOString().split("T")[0];
 
@@ -237,9 +188,31 @@ export function populateSalas() {
         ]
       );
     });
-
-    console.log("Salas populadas para ccps_id = 1");
+    console.log("Banco populado com combinações de operações e dados de usuários.");
   } catch (error) {
-    console.error("Erro ao popular salas:", error);
+    console.error("Erro ao popular banco de dados:", error);
   }
 }
+
+export async function dropDatabase() {
+  const dbPath = `${FileSystem.documentDirectory}SQLite/${DATABASE_NAME}`;
+  const exists = await FileSystem.getInfoAsync(dbPath);
+  if (exists.exists) {
+    await FileSystem.deleteAsync(dbPath);
+    console.log("Banco de dados deletado.");
+  } else {
+    console.log("Banco de dados não encontrado.");
+  }
+}
+
+export async function selectOperacao(): Promise<any[]> {
+  const db = openDatabaseSync(DATABASE_NAME);
+  try {
+    const resultados = db.getAllSync("SELECT * FROM sala;");
+    return resultados;
+  } catch (error) {
+    console.error("Erro ao buscar registros da tabela operacao:", error);
+    return [];
+  }
+}
+

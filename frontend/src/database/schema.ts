@@ -72,9 +72,3 @@ export const operacaoTable = sqliteTable("operacao", {
 
   dataUltimaAtualizacao: text("data_ultima_atualizacao"),
 });
-
-export const ccpsListTable = sqliteTable("ccpsList", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  usuarioId: integer("usuario_id"),  // Relacionamento com usuário
-  ccpsData: text("ccps_data"),        // JSON ou texto do CCPS
-});

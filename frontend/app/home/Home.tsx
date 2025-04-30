@@ -9,8 +9,7 @@ import CardGroup from "@/components/CardList";
 import CheckListSection from "@/components/CheckListSection";
 
 const HomeScreen = () => {
-  const { usuario } = useAppContext(); 
-
+  const { user } = useAppContext(); 
   const progress = 29;
   const [greeting, setGreeting] = useState("");
 
@@ -25,7 +24,7 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{ padding: 20 }}>
         <Text style={styles.greeting}>
-          {greeting}, {usuario?.nome ?? "Visitante"} 👋
+          {greeting}, {user?.nome ?? "Visitante"} 👋
         </Text>
         <ProgressGraph progress={progress} />
         <CardGroup />

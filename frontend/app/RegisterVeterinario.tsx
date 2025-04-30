@@ -15,7 +15,6 @@ import axios from "axios"
 
 export default function RegisterVeterinario() {
   const router = useRouter();
-
   const [nome, setNome] = useState("");
   const [crmv, setCrmv] = useState("");
   const [email, setEmail] = useState("");

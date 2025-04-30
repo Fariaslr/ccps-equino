@@ -23,8 +23,8 @@ export default function Layout() {
   const slideAnim = useRef(new Animated.Value(width)).current;
 
   const { ccpsList, currentCcps, setCurrentCcps } = useCcps();
-  const { usuario } = useAppContext();
-  const isVeterinario = usuario?.tipo_usuario === "VETERINARIO";
+  const { user } = useAppContext();
+  const isVeterinario = user?.tipo_usuario === "VETERINARIO";
 
   const openPanel = () => {
     setVisible(true);

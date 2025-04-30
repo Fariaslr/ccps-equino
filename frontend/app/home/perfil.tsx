@@ -1,12 +1,12 @@
 import { View, Text, Alert, StyleSheet, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
-import * as SecureStore from "expo-secure-store";
 import { useAppContext } from "../../src/context/authContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Perfil() {
   const router = useRouter();
-  const { usuario, setUsuario } = useAppContext();
+  const { user, setUsuario } = useAppContext();  // Acessando o 'user' e 'setUsuario' corretamente do contexto
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -15,9 +15,9 @@ export default function Perfil() {
 
   const handleLogout = async () => {
     try {
-      await SecureStore.deleteItemAsync("usuario");
+      await AsyncStorage.removeItem("usuario");
       router.replace("/Login");
-      setUsuario(null);
+      setUsuario(null); 
     } catch (error) {
       Alert.alert("Erro", "Não foi possível sair. Tente novamente.");
     }
@@ -31,7 +31,7 @@ export default function Perfil() {
     );
   }
 
-  if (!usuario) {
+  if (!user) {
     return (
       <View style={styles.container}>
         <Text style={styles.value}>Dados do veterinário não encontrados.</Text>
@@ -45,22 +45,22 @@ export default function Perfil() {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Nome:</Text>
-      <Text style={styles.value}>{usuario.nome || "Não disponível"}</Text>
+      <Text style={styles.value}>{user.nome || "Não disponível"}</Text>
 
       <Text style={styles.label}>CRMV:</Text>
-      <Text style={styles.value}>{usuario.crmv || "Não disponível"}</Text>
+      <Text style={styles.value}>{user.crmv || "Não disponível"}</Text>
 
       <Text style={styles.label}>E-mail:</Text>
-      <Text style={styles.value}>{usuario.email || "Não disponível"}</Text>
+      <Text style={styles.value}>{user.email || "Não disponível"}</Text>
 
       <Text style={styles.label}>Data de nascimento:</Text>
-      <Text style={styles.value}>{usuario.data_nascimento || "Não disponível"}</Text>
+      <Text style={styles.value}>{user.data_nascimento || "Não disponível"}</Text>
 
       <Text style={styles.label}>Telefone:</Text>
-      <Text style={styles.value}>{usuario.telefone || "Não disponível"}</Text>
+      <Text style={styles.value}>{user.telefone || "Não disponível"}</Text>
 
       <Text style={styles.label}>Tipo usuário:</Text>
-      <Text style={styles.value}>{usuario.tipo_usuario || "Não disponível"}</Text>
+      <Text style={styles.value}>{user.tipo_usuario || "Não disponível"}</Text>
 
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Sair</Text>

@@ -1,24 +1,39 @@
 import { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from "react-native";
 import { useRouter } from "expo-router";
-import * as SecureStore from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { login } from "@/src/services/usuarioService";
 import { useAppContext } from "@/src/context/authContext";
+import { useCcps } from "@/src/context/ccpsContext";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const router = useRouter();
   const { setUsuario } = useAppContext();
+  const { setCcpsList } = useCcps();
 
   const handleLogin = async () => {
     try {
       const result = await login(email, senha);
-
       if (result) {
-        await SecureStore.setItemAsync("usuario", JSON.stringify(result));
-
+        await AsyncStorage.setItem("usuario", JSON.stringify(result));
         setUsuario(result);
+
+        if (result.ccpsList && Array.isArray(result.ccpsList)) {
+          setCcpsList(result.ccpsList);
+          console.log("CCPS list armazenado no context:", result.ccpsList);
+        } else {
+          console.log("CCPS list ausente ou inválido:", result.ccpsList);
+        }
         router.replace("/home/Home");
       } else {
         alert("Email ou senha inválidos!");

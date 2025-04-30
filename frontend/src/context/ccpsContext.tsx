@@ -28,3 +28,4 @@ export const useCcps = (): CcpsContextType => {
   if (!context) throw new Error('useCcps must be used within a CcpsProvider');
   return context;
 };
+
